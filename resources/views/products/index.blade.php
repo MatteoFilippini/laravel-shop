@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
+<a class="btn btn-primary m-3" href="{{route('products.create')}}">Aggiungi un prodotto</a>
 <ul>
     @foreach ($products as $product)
     <li>
