@@ -15,13 +15,15 @@
                         <a href="{{ route('products.show', ['product' => $product->id]) }}" class="btn btn-primary">Dettaglio</a>
                         {{-- FORM DESTROY --}}
                         <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Elimina Prodotto</button>
+                        </form>
+                        {{-- MODIFICA --}}
                         <a href="{{ route('products.edit', $product->id) }}" role="button">
-                        MODIFICA
+                            MODIFICA
                         </a>
-               @method('DELETE')
-               @csrf
-               <button type="submit" class="btn btn-danger">Elimina Prodotto</button>
-            </form>
                     </div>
                 </div>
             </div>
@@ -31,10 +33,3 @@
     <a class="btn btn-primary m-3" href="{{route('products.create')}}">Aggiungi un prodotto</a>
 </div>
 @endsection
-
-
-
-            
-
-
-
