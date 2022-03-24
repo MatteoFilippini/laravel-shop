@@ -89,10 +89,10 @@ class ProductController extends Controller
         ]);
 
         $data = $request->all();
-        $product->update($data);
-        /* $product->save(); */
+        $product->fill($data);
+        $product->save();
 
-        return redirect()->route('products.show', compact($product));
+        return redirect()->route('products.show', $product->id);
     }
 
     /**

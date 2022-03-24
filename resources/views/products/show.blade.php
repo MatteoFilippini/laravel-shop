@@ -15,15 +15,16 @@
     </div>
 
 
-<form action="{{ route('products.destroy', $product->id) }}" method="POST">
-<!-- AGGIUNTO collegamento per modificare il prodotto -->
+    <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+
+        @method('DELETE')
+        @csrf
+        <button type="submit" class="btn btn-danger">Elimina Prodotto</button>
+    </form>
+    <!-- AGGIUNTO collegamento per modificare il prodotto -->
     <a href="{{ route('products.edit', $product->id) }}" role="button">
         MODIFICA
     </a>
-         @method('DELETE')
-         @csrf
-         <button type="submit" class="btn btn-danger">Elimina Prodotto</button>
-      </form>
     <a href="{{ route('products.index') }}">Tutti i prodotti</a>
 </div>
 @endsection
