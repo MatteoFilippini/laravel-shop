@@ -1,19 +1,25 @@
 @extends('layouts.main')
 
 @section('content')
-   <div>
-      <figure>
-         <img src="{{ $product->image }}" alt="">
-      </figure>
-      <h2>{{ $product->name }}</h2>
-      <p>{{ $product->description }}</p>
-      <div>{{ $product->price }}</div>
-      <a href="{{ route('products.index') }}">Home</a>
-      {{-- FORM DESTROY --}}
-      <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+<div class="container p-5">
+
+
+
+    <div class="card">
+        <img src="{{ $product->image }}" class="card-img-top" alt="{{ $product->title }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ $product->title }}</h5>
+            <p class="card-text">{{ $product->description }}</p>
+            <h3 class="card-title">$ {{ $product->price }}</h3>
+        </div>
+    </div>
+
+
+<form action="{{ route('products.destroy', $product->id) }}" method="POST">
          @method('DELETE')
          @csrf
          <button type="submit" class="btn btn-danger">Elimina Prodotto</button>
       </form>
-   </div>
+    <a href="{{ route('products.index') }}">Tutti i prodotti</a>
+</div>
 @endsection
