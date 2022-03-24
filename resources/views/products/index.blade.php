@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
+
 <div class="main-index p-5">
     <div class="container">
         <div class="row">
@@ -24,10 +25,12 @@
             @endforeach
         </div>
     </div>
+    <a class="btn btn-primary m-3" href="{{route('products.create')}}">Aggiungi un prodotto</a>
 </div>
 @endsection
 
 
 
             
+
 
