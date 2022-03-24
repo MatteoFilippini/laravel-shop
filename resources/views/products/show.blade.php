@@ -15,7 +15,11 @@
     </div>
 
 
-
+<form action="{{ route('products.destroy', $product->id) }}" method="POST">
+         @method('DELETE')
+         @csrf
+         <button type="submit" class="btn btn-danger">Elimina Prodotto</button>
+      </form>
     <a href="{{ route('products.index') }}">Tutti i prodotti</a>
 </div>
 @endsection
