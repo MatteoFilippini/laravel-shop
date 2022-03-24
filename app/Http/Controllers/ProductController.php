@@ -67,7 +67,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        return view('products.edit', compact('product'));
     }
 
     /**
@@ -77,9 +79,20 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'price' => ['numeric', 'min:1', 'max:1000'],
+            'image' => ['string']
+        ]);
+
+        $data = $request->all();
+        $product->update($data);
+        /* $product->save(); */
+
+        return redirect()->route('products.show', compact($product));
     }
 
     /**

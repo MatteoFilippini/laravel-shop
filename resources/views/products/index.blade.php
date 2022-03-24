@@ -14,7 +14,10 @@
                         <p class="card-text">{{ $product->description }}</p>
                         <a href="{{ route('products.show', ['product' => $product->id]) }}" class="btn btn-primary">Dettaglio</a>
                         {{-- FORM DESTROY --}}
-            <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                        <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                        <a href="{{ route('products.edit', $product->id) }}" role="button">
+                        MODIFICA
+                        </a>
                @method('DELETE')
                @csrf
                <button type="submit" class="btn btn-danger">Elimina Prodotto</button>
@@ -32,5 +35,6 @@
 
 
             
+
 
 
