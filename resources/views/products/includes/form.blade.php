@@ -46,6 +46,12 @@
                @endforeach
             </select>
          </div>
+         @foreach($categories as $category)
+         <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="{{$category->id}}" id="c-{{$category->id}}" name="cats[]" @if (in_array($category->id,old('category_id',$categories_ids ?? []) )) checked @endif>
+            <label class="form-check-label" for="c-{{$category->id}}">{{$category->name}}</label>
+         </div>
+         @endforeach
          <div class="d-flex justify-content-end align-items-center pt-3">
             <button type="reset" class="btn btn-danger me-3">RESET</button>
             <button type="submit" class="btn btn-success">SEND</button>

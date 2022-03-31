@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Product;
 use App\Models\Brand;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -29,7 +30,8 @@ class ProductController extends Controller
     {
         $product = new Product();
         $brands = Brand::all();
-        return view('products.create', compact('product', 'brands'));
+        $categories = Category::all();
+        return view('products.create', compact('product', 'brands', 'categories'));
     }
 
     /**
@@ -45,11 +47,15 @@ class ProductController extends Controller
             'price' => ['required', 'numeric', 'min:0.1'],
             'description' => ['required', 'string'],
             'image' => ['string'],
-            'brand_id' => 'exists:brands,id'
+            'brand_id' => 'exists:brands,id',
+            'cats' => 'exists:categories,id'
         ]);
 
         $data = $request->all();
         $product = Product::create($data);
+        if (array_key_exists('cats', $data)) {
+            $product->categories()->attach($data['cats']);
+        }
         return redirect()->route('products.show', $product)->with('message', "Prodotto $product->name aggiuto con successo");
     }
 
@@ -75,7 +81,10 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $brands = Brand::all();
-        return view('products.edit', compact('product', 'brands'));
+        $categories = Category::all();
+        $categories_ids = $product->categories->pluck('id')->toArray();
+
+        return view('products.edit', compact('product', 'brands', 'categories_ids', 'categories'));
     }
 
     /**
@@ -91,12 +100,16 @@ class ProductController extends Controller
             'name' => ['required', 'string'],
             'description' => ['required', 'string'],
             'price' => ['numeric', 'min:0.1', 'max:1000'],
-            'image' => ['string']
+            'image' => ['string'],
+            'brand_id' => 'exists:brands,id',
+            'cats' => 'exists:categories,id'
         ]);
 
         $data = $request->all();
         $product->fill($data);
         $product->save();
+        if (!array_key_exists('cats', $data)) $product->categories()->detach();
+        else $product->categories()->sync($data['cats']);
 
         return redirect()->route('products.show', $product->id)->with('message', "Prodotto $product->name modificato con successo");
     }
