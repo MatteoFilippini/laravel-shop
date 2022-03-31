@@ -39,12 +39,14 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'unique:products', 'max:255'],
-            'price' => ['required'],
+            'price' => ['required', 'numeric', 'min:0.1'],
+            'description' => ['required', 'string'],
+            'image' => ['string']
         ]);
 
         $data = $request->all();
         $product = Product::create($data);
-        return redirect()->route('products.show', $product);
+        return redirect()->route('products.show', $product)->with('message', "Prodotto $product->name aggiuto con successo");
     }
 
     /**
@@ -84,7 +86,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'price' => ['numeric', 'min:1', 'max:1000'],
+            'price' => ['numeric', 'min:0.1', 'max:1000'],
             'image' => ['string']
         ]);
 
@@ -92,7 +94,7 @@ class ProductController extends Controller
         $product->fill($data);
         $product->save();
 
-        return redirect()->route('products.show', $product->id);
+        return redirect()->route('products.show', $product->id)->with('message', "Prodotto $product->name modificato con successo");
     }
 
     /**
