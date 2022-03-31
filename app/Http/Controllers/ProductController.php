@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
+use App\Models\Brand;
 
 class ProductController extends Controller
 {
@@ -27,7 +28,8 @@ class ProductController extends Controller
     public function create()
     {
         $product = new Product();
-        return view('products.create', compact('product'));
+        $brands = Brand::all();
+        return view('products.create', compact('product', 'brands'));
     }
 
     /**
@@ -42,7 +44,8 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'unique:products', 'max:255'],
             'price' => ['required', 'numeric', 'min:0.1'],
             'description' => ['required', 'string'],
-            'image' => ['string']
+            'image' => ['string'],
+            'brand_id' => 'exists:brands,id'
         ]);
 
         $data = $request->all();
@@ -71,8 +74,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-
-        return view('products.edit', compact('product'));
+        $brands = Brand::all();
+        return view('products.edit', compact('product', 'brands'));
     }
 
     /**
