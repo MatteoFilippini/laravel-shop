@@ -10,7 +10,8 @@ class Product extends Model
         'name',
         'description',
         'price',
-        'image'
+        'image',
+        'brand_id'
     ];
 
     public function brand()

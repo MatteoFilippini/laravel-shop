@@ -17,6 +17,11 @@
                <h5 class="card-title">{{ $product->name }}</h5>
                <p class="card-text">{{ $product->description }}</p>
                <h3 class="card-title">$ {{ $product->price }}</h3>
+               @if($product->brand)
+               <h4>Brand: {{ $product->brand->name }}</h4>
+               @else
+               -
+               @endif
             </div>
             <div class="d-flex justify-content-between">
                <form action="{{ route('products.destroy', $product->id) }}" method="POST">
@@ -24,7 +29,6 @@
                   @csrf
                   <button type="submit" class="btn btn-danger">Elimina Prodotto</button>
                </form>
-               <!-- AGGIUNTO collegamento per modificare il prodotto -->
                <a class="btn btn-secondary" href="{{ route('products.edit', $product->id) }}" role="button">
                   MODIFICA
                </a>

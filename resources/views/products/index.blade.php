@@ -12,6 +12,11 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->title }}</h5>
                         <p class="card-text">{{ $product->description }}</p>
+                        @if($product->brand)
+                        <h4>{{ $product->brand->name }}</h4>
+                        @else
+                        -
+                        @endif
                         <a href="{{ route('products.show', ['product' => $product->id]) }}" class="btn btn-primary">Dettaglio</a>
                         {{-- FORM DESTROY --}}
                         <form action="{{ route('products.destroy', $product->id) }}" method="POST">
