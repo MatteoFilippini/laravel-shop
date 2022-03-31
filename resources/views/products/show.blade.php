@@ -22,6 +22,12 @@
                @else
                -
                @endif
+               <h5>Categorie:</h5>
+               @forelse($product->categories as $category)
+               <h6> {{ $category->name }}</h6>
+               @empty
+               NO CATEGORIE
+               @endforelse
             </div>
             <div class="d-flex justify-content-between">
                <form action="{{ route('products.destroy', $product->id) }}" method="POST">

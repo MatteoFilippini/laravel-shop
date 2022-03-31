@@ -17,6 +17,12 @@
                         @else
                         -
                         @endif
+                        <h5>Categorie:</h5>
+                        @forelse($product->categories as $category)
+                        <h6> {{ $category->name }}</h6>
+                        @empty
+                        NO CATEGORIE
+                        @endforelse
                         <a href="{{ route('products.show', ['product' => $product->id]) }}" class="btn btn-primary">Dettaglio</a>
                         {{-- FORM DESTROY --}}
                         <form action="{{ route('products.destroy', $product->id) }}" method="POST">
