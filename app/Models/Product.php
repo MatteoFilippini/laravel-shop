@@ -12,4 +12,9 @@ class Product extends Model
         'price',
         'image'
     ];
+
+    public function brand()
+    {
+        return $this->belongsTo('App\Models\Brand');
+    }
 }
