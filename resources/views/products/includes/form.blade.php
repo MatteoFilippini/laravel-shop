@@ -18,7 +18,7 @@
    @endif
    @csrf
    <div class="mb-3">
-      <label for="name" class="form-label">Nome prodotto</label>
+      <label for="name" class="form-label">Nome prodotto:</label>
       <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $product->name) }}">
       <div class="form-text">nome del prodotto da inserire</div>
    </div>
