@@ -1966,11 +1966,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ProductList",
   data: function data() {
     return {
-      products: []
+      products: [],
+      brands: [],
+      selectedBrand: null
     };
   },
   methods: {
@@ -1978,7 +1992,19 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("http://127.0.0.1:8000/api/products").then(function (res) {
-        _this.products = res.data;
+        _this.products = res.data.products;
+        _this.brands = res.data.brands;
+      })["catch"](function (err) {
+        console.log("errore");
+      }).then(function () {
+        console.log("api terminata");
+      });
+    },
+    getBrands: function getBrands() {
+      var _this2 = this;
+
+      axios.get("http://127.0.0.1:8000/api/products?brand=" + this.selectedBrand).then(function (res) {
+        _this2.brands = res.data;
       })["catch"](function (err) {
         console.log("errore");
       }).then(function () {
@@ -1988,6 +2014,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getProducts();
+    this.getBrands();
   }
 });
 
@@ -19748,6 +19775,54 @@ var render = function () {
         ])
       }),
       0
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("Brands")]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.selectedBrand,
+            expression: "selectedBrand",
+          },
+        ],
+        attrs: { name: "", id: "" },
+        on: {
+          change: function ($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function (o) {
+                return o.selected
+              })
+              .map(function (o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.selectedBrand = $event.target.multiple
+              ? $$selectedVal
+              : $$selectedVal[0]
+          },
+        },
+      },
+      [
+        _c("option", { attrs: { value: "" } }, [_vm._v("-")]),
+        _vm._v(" "),
+        _vm._l(_vm.brands, function (brand) {
+          return _c(
+            "option",
+            {
+              key: brand.id,
+              domProps: { value: brand.id },
+              on: { change: _vm.getBrands },
+            },
+            [_vm._v("\n      " + _vm._s(brand.name) + "\n    ")]
+          )
+        }),
+      ],
+      2
     ),
   ])
 }
