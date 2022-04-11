@@ -15,18 +15,16 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
+
     {
-        $data = $request->all();
-        $brand_value = $data['brand'];
-
-        if (!$brand_value) {
-            $products = Product::with('brand')->get();
-        } else {
+        if (array_key_exists('brands', $request->all())) {
+            $data = $request->all();
+            $brand_value = $data['brands'];
             $products = Product::with('brand')->where('brand_id', $brand_value)->get();
-        };
-
+        } else {
+            $products = Product::with('brand')->get();
+        }
         $brands = Brand::all();
-
         return response()->json(compact('products', 'brands'));
     }
 
