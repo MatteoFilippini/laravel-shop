@@ -18,4 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// davanti ce sempre api
 Route::get('/products', 'Api\ProductController@index');
+// Route::get('/products', 'Api\BrandsController@index');
