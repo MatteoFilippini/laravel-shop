@@ -7,14 +7,9 @@
       </li>
     </ul>
     <h2>Brands</h2>
-    <select name="" id="" v-model="selectedBrand">
-      <option value="">-</option>
-      <option
-        :value="brand.id"
-        v-for="brand in brands"
-        :key="brand.id"
-        @change="getBrands"
-      >
+    <select name="" id="" v-model="selectedBrand" @change="getBrandOfProduct()">
+      <option value="">----</option>
+      <option :value="brand.id" v-for="brand in brands" :key="brand.id">
         {{ brand.name }}
       </option>
     </select>
@@ -32,12 +27,12 @@ export default {
     };
   },
   methods: {
-    getProducts() {
+    getProductsAndBrands() {
       axios
         .get("http://127.0.0.1:8000/api/products")
         .then((res) => {
-          this.products = res.data.products;
-          this.brands = res.data.brands;
+          this.products = res.data["products"];
+          this.brands = res.data["brands"];
         })
         .catch((err) => {
           console.log("errore");
@@ -46,11 +41,12 @@ export default {
           console.log("api terminata");
         });
     },
-    getBrands() {
+    getBrandOfProduct() {
       axios
-        .get("http://127.0.0.1:8000/api/products?brand=" + this.selectedBrand)
+        .get("http://127.0.0.1:8000/api/products?brands=" + this.selectedBrand)
         .then((res) => {
-          this.brands = res.data;
+          this.products = res.data.products;
+          console.log("brands");
         })
         .catch((err) => {
           console.log("errore");
@@ -61,8 +57,7 @@ export default {
     },
   },
   mounted() {
-    this.getProducts();
-    this.getBrands();
+    this.getProductsAndBrands();
   },
 };
 </script>
