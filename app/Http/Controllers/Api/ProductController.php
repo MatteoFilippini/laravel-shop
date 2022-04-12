@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index(Request $request)
 
     {
-        if (array_key_exists('brands', $request->all())) {
+        if (array_key_exists('brands', $request->all()) && !is_null($request->all()['brands'])) {
             $data = $request->all();
             $brand_value = $data['brands'];
             $products = Product::with('brand')->where('brand_id', $brand_value)->get();
